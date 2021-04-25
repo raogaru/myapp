@@ -38,10 +38,28 @@ pipeline {
         // ######################################################################
         stage('stage3') {
             steps {
+		parallel {
+		build-earth: {
+                echo "Building team-earth started"
                 script {
-                    v_2="value-2"
+                    TEAM="team-earth"
                 }
-                echo "v_1: ${v_1}"
+                echo "Building team-earth completed"
+		},
+		build-mars: {
+                echo "Building team-mars started"
+                script {
+                    TEAM="team-mars"
+                }
+                echo "Building team-mars completed"
+		},
+		build-venus: {
+                echo "Building team-venus started"
+                script {
+                    TEAM="team-venus"
+                }
+                echo "Building team-venus completed"
+		}
             }
         }
         // ######################################################################
