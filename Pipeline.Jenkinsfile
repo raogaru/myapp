@@ -17,13 +17,8 @@ pipeline {
                 script {
                     v_1 = "value-1"
                     sh "find . -type f -print"
-                    /*for TEAM_NAME in ${RAO_TEAMS}
-                    do
-                    
-                    done
-                    */
                 }
-                echo "v_1: ${v_1}"
+                echo "RAO_TEAMS: ${RAO_TEAMS}"
             }
         }
         // ######################################################################
