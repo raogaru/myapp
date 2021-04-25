@@ -50,11 +50,9 @@ pipeline {
             }
         }
         // ######################################################################
-        stage('stage5') {
-            when {
-                expression { v_1 == 'value-1' }
-            }
+        stage('stage5-test2') {
             steps {
+		sh "./test2.sh"
                 echo "v_1: ${v_1}"
             }
         }
