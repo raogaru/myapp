@@ -38,27 +38,11 @@ pipeline {
         // ######################################################################
         stage('stage3') {
             steps {
-		build-earth {
                 echo "Building team-earth started"
                 script {
                     TEAM="team-earth"
                 }
                 echo "Building team-earth completed"
-		},
-		build-mars {
-                echo "Building team-mars started"
-                script {
-                    TEAM="team-mars"
-                }
-                echo "Building team-mars completed"
-		},
-		build-venus {
-                echo "Building team-venus started"
-                script {
-                    TEAM="team-venus"
-                }
-                echo "Building team-venus completed"
-		}
             }
         }
         // ######################################################################
