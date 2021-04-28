@@ -19,7 +19,6 @@ if [ "${vTYPE}" == "SYSTEM" ] ; then
 vGITLOG="system.gitlog"
 fi
 
-
 git log origin/master..origin/team-${vTEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
 #> $}vGITLOG}
 #cat ${vGITLOG}
