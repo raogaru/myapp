@@ -20,8 +20,9 @@ vGITLOG="system.gitlog"
 fi
 
 
-git log origin/master..origin/team-${vTEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' > $}vGITLOG}
-cat ${vGITLOG}
+git log origin/master..origin/team-${vTEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
+#> $}vGITLOG}
+#cat ${vGITLOG}
 
 s=$((1 + $RANDOM % 10))
 echo "Sleeping ... ${s} seconds"
