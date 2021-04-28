@@ -1,6 +1,6 @@
 vLINE="######################################################################"
 vTYPE="${1}"
-vTEAM="${2}
+vTEAM="${2}"
 vTASK="BUILD-${vTYPE}"
 echo "${vLINE}"
 echo "${VTASK} Started"
