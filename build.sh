@@ -23,7 +23,7 @@ echo "${vTASK} Started"
 #> $}vGITLOG}
 #cat ${vGITLOG}
 
-s=$((1 + $RANDOM % 10))
+s=$((1 + $RANDOM % 3))
 echo "Sleeping ... ${s} seconds"
 sleep ${s}
 
