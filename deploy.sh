@@ -1,7 +1,7 @@
 #!/bin/bash
 vLINE="######################################################################"
 vTARGET="${1}"
-vTASK="DEPLOY:${vTARGET}
+vTASK="DEPLOY:${vTARGET}"
 echo "${vLINE}"
 echo "${vTASK} Started"
 

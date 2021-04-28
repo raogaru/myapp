@@ -1,7 +1,8 @@
+#!/bin/bash
 vLINE="######################################################################"
 vTASK="TEST-${1}"
 echo "${vLINE}"
-echo "${VTASK} Started"
+echo "${vTASK} Started"
 
 s=$((1 + $RANDOM % 10))
 echo "Sleeping ... ${s} seconds"
