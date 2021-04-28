@@ -1,0 +1,167 @@
+// ######################################################################
+// Variables
+def projName="RAO"
+def vViewNameCI="${projName}-CI"
+def vJobNameMain="${projName}-CI-00-Main"
+
+def vJobNameEnterBuild="${projName}-CI-10-Enter-Build"
+def vJobNameTeamBuild="${projName}-CI-20-Team-Build"
+def vJobNameSystemBuild="${projName}-CI-30-System-Build"
+def vJobNameReleaseBuild="${projName}-CI-40-Release-Build"
+
+def vJobNameDeployPipeTest="${projName}-CI-50-Deploy-Pipeline-Test"
+def vJobNameExecutePipeTest="${projName}-CI-55-Execute-Pipeline-Test"
+
+def vViewNameCD="${projName}-CD"
+def vJobNameDeploySecurityTest="${projName}-CD-10-Deploy-Security-Test"
+def vJobNameDeployPerfTest="${projName}-CD-20-Deploy-Performance-Test"
+def vJobNameDeployAcceptTest="${projName}-CD-30-Deploy-Acceptance-Test"
+def vJobNameDeployInterTest="${projName}-CD-40-Deploy-Interface-Test"
+def vJobNameDeployProduction="${projName}-50-Deploy-Production"
+
+// ######################################################################
+job("${vJobNameMain}") {
+	description("${vJobNameMain}")  
+	displayName("${vJobNameMain}")
+}
+// ######################################################################
+// ######################################################################
+// ######################################################################
+// CI-PIPELINE JOBS
+// ######################################################################
+// ######################################################################
+// ######################################################################
+job("${vJobNameEnterBuild}") {
+	description("${vJobNameEnterBuild}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh check')
+	}
+}
+// ######################################################################
+job("${vJobNameTeamBuild}") {
+	description("${vJobNameTeamBuild}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh earth')
+        shell('./build.sh mars')
+        shell('./build.sh venus')
+	}
+}
+// ######################################################################
+job("${vJobNameSystemBuild}") {
+	description("${vJobNameSystemBuild}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh system')
+	}
+}
+// ######################################################################
+job("${vJobNameReleaseBuild}") {
+	description("${vJobNameReleaseBuild}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh release')
+	}
+}
+// ######################################################################
+job("${vJobNameDeployPipeTest}") {
+	description("${vJobNameDeployPipeTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh PIPE')
+	}
+}
+// ######################################################################
+job("${vJobNameExecutePipeTest}") {
+	description("${vJobNameExecutePipeTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./test.sh UNIT')
+	}
+}
+// ######################################################################
+// ######################################################################
+// ######################################################################
+// CD-PIPELINE JOBS
+// ######################################################################
+// ######################################################################
+// ######################################################################
+job("${vJobNameDeploySecurityTest}") {
+	description("${vJobNameDeploySecurityTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh SECURITY')
+	}
+}
+// ######################################################################
+job("${vJobNameDeployPerfTest}") {
+	description("${vJobNameDeployPerfTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh PERFORMANCE')
+	}
+}
+// ######################################################################
+job("${vJobNameDeployAcceptTest}") {
+	description("${vJobNameDeployAcceptTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh ACCEPTANCE')
+	}
+}
+// ######################################################################
+job("${vJobNameDeployInterTest}") {
+	description("${vJobNameDeployInterTest}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh INTERFACE')
+	}
+}
+// ######################################################################
+job("${vJobNameDeployProduction}") {
+	description("${vJobNameDeployProduction}")
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh PRODUCTION')
+	}
+}
+// ######################################################################
+listView("${vViewNameCI}") {
+    description("${vViewNameCI}")
+    filterBuildQueue()
+    filterExecutors()
+    jobs {
+        name("${vViewNameCI}")
+        regex(/${vViewNameCI}-.+/)
+    }
+    columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+// ######################################################################
+listView("${vViewNameCD}") {
+    description("${vViewNameCD}")
+    filterBuildQueue()
+    filterExecutors()
+    jobs {
+        name("${vViewNameCD}")
+        regex(/${vViewNameCD}-.+/)
+    }
+    columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+// ######################################################################
