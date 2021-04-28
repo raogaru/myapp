@@ -2,13 +2,11 @@
 // Variables
 def projName="RAO"
 def vViewNameCI="${projName}-CI"
-def vJobNameMainCI="${projName}-CI-00-Main"
-
+def vJobNameMainCI="${projName}-CI-00-Kickoff"
 def vJobNameEnterBuild="${projName}-CI-10-Enter-Build"
 def vJobNameTeamBuild="${projName}-CI-20-Team-Build"
 def vJobNameSystemBuild="${projName}-CI-30-System-Build"
 def vJobNameReleaseBuild="${projName}-CI-40-Release-Build"
-
 def vJobNameDeployPipeTest="${projName}-CI-50-Deploy-Pipeline-Test"
 def vJobNameExecutePipeTest="${projName}-CI-55-Execute-Pipeline-Test"
 
@@ -20,11 +18,6 @@ def vJobNameDeployAcceptTest="${projName}-CD-30-Deploy-Acceptance-Test"
 def vJobNameDeployInterTest="${projName}-CD-40-Deploy-Interface-Test"
 def vJobNameDeployProduction="${projName}-CD-50-Deploy-Production"
 
-// ######################################################################
-job("${vJobNameMainCI}") {
-	description("${vJobNameMainCI}")  
-	displayName("${vJobNameMainCI}")
-}
 // ######################################################################
 // ######################################################################
 // ######################################################################
@@ -81,6 +74,61 @@ job("${vJobNameExecutePipeTest}") {
         shell('./test.sh UNIT')
 	}
 }
+// ######################################################################
+pipelineJob("${vJobNameMainCI}") {
+  definition {
+    cps {
+      script('''
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    environment {
+        BUILD_NUM = "20210425124500"
+    }
+
+    stages {
+        stage('Enter') {
+            steps {
+              build "${vJobNameEnterBuild}"
+            }
+        }
+        stage('Team') {
+            steps {
+              build "${vJobNameTeamBuild}"
+            }
+        }
+        stage('System') {
+            steps {
+              build "${vJobNameSystemBuild}"
+            }
+        }
+        stage('Release') {
+            steps {
+              build "${vJobNameReleaseBuild}"
+            }
+        }
+        stage('Deploy') {
+            steps {
+              build "${vJobNameDeployPipeTest}"
+            }
+        }
+        stage('Test') {
+            steps {
+              build "${vJobNameExecutePipeTest}"
+            }
+        }
+    }
+}
+      '''.stripIndent())
+      sandbox()     
+    }
+  }
+}
+
 // ######################################################################
 // ######################################################################
 // ######################################################################
