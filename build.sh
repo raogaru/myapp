@@ -1,5 +1,5 @@
 #!/bin/bash
-vLINE="######################################################################"
+source pipeline.env
 vTYPE="${1}"
 vTEAM="${2}"
 vTASK="BUILD:${vTYPE}-${vTEAM}"
@@ -23,7 +23,7 @@ echo "${vTASK} Started"
 #> $}vGITLOG}
 #cat ${vGITLOG}
 
-s=$((1 + $RANDOM % 3))
+s=$((1 + $RANDOM % ${SLEEP_SECONDS}))
 echo "Sleeping ... ${s} seconds"
 sleep ${s}
 
@@ -31,7 +31,7 @@ r=$((1 + $RANDOM % 100))
 echo "${vTASK} Completed"
 echo "${vTASK} Result ${r}"
 
-if [ ${r} -gt 1 ]; then
+if [ ${r} -gt ${PASS_SCORE} ]; then
 	echo "${vTASK} SUCCESSS" ; echo "${vLINE}" ; exit 0
 else
 	echo "${vTASK} FAILED"; echo "${vLINE}" ; exit 1
