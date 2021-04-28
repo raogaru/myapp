@@ -1,22 +1,24 @@
+#!/bin/bash
 vLINE="######################################################################"
 vTYPE="${1}"
 vTEAM="${2}"
 vTASK="BUILD:${vTYPE}-${vTEAM}"
 echo "${vLINE}"
-echo "${VTASK} Started"
+echo "${vTASK} Started"
 
-if [ "${vTYPE}" != "TEAM" && "${vTYPE}" != "SYSTEM" ]; then
+if [ "${vTYPE}" != "TEAM" ] && [ "${vTYPE}" != "SYSTEM" ] ; then
 	echo Invalid argument to build script
 	exit 1
 fi
 
-if [ "${vTYPE}" == "TEAM" ]; then
+if [ "${vTYPE}" == "TEAM" ] ; then
 	vGITLOG="team-${vTEAM}.gitlog"
 fi
 
-if [ "${vTYPE}" == "SYSTEM" ]; then
+if [ "${vTYPE}" == "SYSTEM" ] ; then
 vGITLOG="system.gitlog"
 fi
+
 
 git log origin/master..origin/team-${vTEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' > $}vGITLOG}
 cat ${vGITLOG}
