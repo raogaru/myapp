@@ -1,7 +1,7 @@
 vLINE="######################################################################"
 vTYPE="${1}"
 vTEAM="${2}"
-vTASK="BUILD-${vTYPE}"
+vTASK="BUILD:${vTYPE}-${vTEAM}"
 echo "${vLINE}"
 echo "${VTASK} Started"
 
@@ -18,7 +18,7 @@ if [ "${vTYPE}" == "SYSTEM" ]; then
 vGITLOG="system.gitlog"
 fi
 
-git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' > $}vGITLOG}
+git log origin/master..origin/team-${vTEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' > $}vGITLOG}
 cat ${vGITLOG}
 
 s=$((1 + $RANDOM % 10))
