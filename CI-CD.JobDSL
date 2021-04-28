@@ -2,7 +2,7 @@
 // Variables
 def projName="RAO"
 def vViewNameCI="${projName}-CI"
-def vJobNameMain="${projName}-CI-00-Main"
+def vJobNameMainCI="${projName}-CI-00-Main"
 
 def vJobNameEnterBuild="${projName}-CI-10-Enter-Build"
 def vJobNameTeamBuild="${projName}-CI-20-Team-Build"
@@ -13,16 +13,17 @@ def vJobNameDeployPipeTest="${projName}-CI-50-Deploy-Pipeline-Test"
 def vJobNameExecutePipeTest="${projName}-CI-55-Execute-Pipeline-Test"
 
 def vViewNameCD="${projName}-CD"
+def vJobNameMainCD="${projName}-CD-00-Main"
 def vJobNameDeploySecurityTest="${projName}-CD-10-Deploy-Security-Test"
 def vJobNameDeployPerfTest="${projName}-CD-20-Deploy-Performance-Test"
 def vJobNameDeployAcceptTest="${projName}-CD-30-Deploy-Acceptance-Test"
 def vJobNameDeployInterTest="${projName}-CD-40-Deploy-Interface-Test"
-def vJobNameDeployProduction="${projName}-50-Deploy-Production"
+def vJobNameDeployProduction="${projName}-CD-50-Deploy-Production"
 
 // ######################################################################
-job("${vJobNameMain}") {
-	description("${vJobNameMain}")  
-	displayName("${vJobNameMain}")
+job("${vJobNameMainCI}") {
+	description("${vJobNameMainCI}")  
+	displayName("${vJobNameMainCI}")
 }
 // ######################################################################
 // ######################################################################
@@ -87,6 +88,10 @@ job("${vJobNameExecutePipeTest}") {
 // ######################################################################
 // ######################################################################
 // ######################################################################
+job("${vJobNameMainCD}") {
+	description("${vJobNameMainCD}")  
+	displayName("${vJobNameMainCD}")
+}// ######################################################################
 job("${vJobNameDeploySecurityTest}") {
 	description("${vJobNameDeploySecurityTest}")
 	scm {github('raogaru/myapp')}
