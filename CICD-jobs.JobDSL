@@ -27,7 +27,7 @@ job("${vJobNameEnterBuild}") {
 	description("${vJobNameEnterBuild}")
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./build.sh check')
+        shell(echo 'Hello World')
 	}
 }
 // ######################################################################
