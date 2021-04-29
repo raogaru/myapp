@@ -1,5 +1,5 @@
 #!/bin/bash
-source pipeline.env
+source myapp.env
 vTYPE="${1}"
 vTEAM="${2}"
 vTASK="BUILD:${vTYPE}-${vTEAM}"

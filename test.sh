@@ -1,5 +1,5 @@
 #!/bin/bash
-source pipeline.env
+source myapp.env
 vTASK="TEST-${1}"
 echo "${vLINE}"
 echo "${vTASK} Started"

@@ -1,5 +1,5 @@
 #!/bin/bash
-source pipeline.env
+source myapp.env
 vTARGET="${1}"
 vTASK="DEPLOY:${vTARGET}"
 echo "${vLINE}"
