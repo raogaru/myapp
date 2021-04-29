@@ -8,4 +8,3 @@ liquibase \
   --password=rao \
   --logLevel info \
 update
-#  --classpath=/Users/rao/Downloads/postgresql-42.2.20.jar \
