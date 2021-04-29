@@ -6,7 +6,7 @@ echo "${vLINE}"
 echo "${vTASK} Started"
 
 echo Deploy to ${vTARGET} database
-case " "${vTARGET}" in 
+case "${vTARGET}" in 
 "PIPE") src/db/liquibase.sh pipe ;;
 "SECURITY") src/db/liquibase.sh st ;;
 "PERFORMANCE") src/db/liquibase.sh pt ;;
