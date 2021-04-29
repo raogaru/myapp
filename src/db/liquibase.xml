@@ -18,4 +18,8 @@
         <sqlFile path="src/db/sql/004.sql" />  
    </changeSet> 
 
+   <changeSet id="4" author="rao">  
+        <sqlFile path="src/db/sql/005.sql" />  
+   </changeSet> 
+
 </databaseChangeLog>
