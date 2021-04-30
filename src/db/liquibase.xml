@@ -26,5 +26,9 @@
         <sqlFile path="src/db/sql/006.sql" />  
    </changeSet> 
 
+   <changeSet id="6" author="rao">  
+        <sqlFile path="src/db/sql/007.sql" />  
+   </changeSet> 
+
 
 </databaseChangeLog>
