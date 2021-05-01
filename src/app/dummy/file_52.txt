@@ -1,2 +1,0 @@
-Fri Apr 30 23:59:02 EDT 2021 change#2 by user venus10 from team venus in file src/app/dummy/file_52.txt
-Sat May  1 00:06:02 EDT 2021 change#6 by user mars9 from team mars in file src/app/dummy/file_52.txt

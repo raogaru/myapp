@@ -1,2 +1,0 @@
-Fri Apr 30 23:59:02 EDT 2021 change#2 by user pluto5 from team pluto in file src/app/dummy/file_24.txt
-Sat May  1 00:06:02 EDT 2021 change#3 by user mars6 from team mars in file src/app/dummy/file_24.txt
