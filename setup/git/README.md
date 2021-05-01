@@ -46,7 +46,25 @@ git checkout user-${TEAM}3;
 git push --set-upstream origin user-${TEAM}3;
 done
 
-# configure dummy file
-mkdir -p src/app/dummy/file_0.txt
-echo "hello world" > src/app/dummy
+
+# configure dummy app files for simulation
+
+git checkout master 
+
+mkdir -p src/app/dummy
+
+echo "hello world" > src/app/dummy/file_0.txt
+
+git add src/app/dummy/file_0.txt
+
+mkdir -p src/db/sql
+
+echo "--hello world" > src/app/dummy/000.sql
+
+git add src/db/sql/000.sql
+
+git commit -m dummy-files
+
+git push
+
 
