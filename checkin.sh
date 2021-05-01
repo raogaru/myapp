@@ -8,8 +8,8 @@ vACTION=${1}
 source myapp.env
 
 MAX_FILE_COUNT=100		# max number of files edited by simulation
-MIN_COMMITS_PER_TEAM=3		# min number of commits per team by simulation
-MAX_COMMITS_PER_TEAM=8		# max number of commits per team by simulation
+MIN_COMMITS_PER_TEAM=2		# min number of commits per team by simulation
+MAX_COMMITS_PER_TEAM=5		# max number of commits per team by simulation
 MAX_TEAM_MEMBERS=10		# max number of team members per agile team
 
 BUILD_ENV_FILE=/tmp/build.env
@@ -66,8 +66,9 @@ do
 
 		echo "$(date) change#${i} by user ${v_user} from team ${TEAM} in file ${v_file}" >> ${v_file}
 		git add ${v_file}
-		git commit -m "RAO-${v_jira}:${TEAM}${v_user}:${TEAM}/${TEAM}.txt file modification ${i}"
+		git commit -m "${v_jira}:${v_user}:${v_file} $(date)"
 	done
+	git push
 done
 }
 # ------------------------------------------------------------
@@ -79,7 +80,7 @@ for TEAM in ${BUILD_TEAMS}
 do
 	LineHeader "List of commits by team \"${TEAM}\":"
 	ECHO "git log origin/master..build-${TEAM}" 
-	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
+	git log origin/master..team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
 done
 }
 ######################################################################
