@@ -53,8 +53,8 @@ mkdir -p /tmp/${BUILD_NUM}
 }
 # ------------------------------------------------------------
 f_flow_checkout_master() {
-#ECHO "Checkout master branch"
-#	git checkout master
+ECHO "Checkout master branch"
+	git checkout master
 
 LineHeader "List all branches"
 	git branch -a
