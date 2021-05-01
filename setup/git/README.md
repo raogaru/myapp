@@ -2,9 +2,11 @@
 # Configure GIT in preparation for CICD pipeline
 # ######################################################################
 
-# ----------------------------------------------------------------------
+# Clone myapp.git
 mkdir -p $HOME/GitHub
+
 cd $HOME/GitHub
+
 git clone https://github.com/raogaru/myapp.git
 
 git branch -a
@@ -34,16 +36,15 @@ git checkout system
 git push --set-upstream origin system
 
 # configure push for all user branches
-for TEAM in ${BUILD_TEAMS} 
+for TEAM in ${BUILD_TEAMS} ; 
 do 
-git checkout user-${TEAM}1
-git push --set-upstream origin user-${TEAM}1
-git checkout user-${TEAM}2
-git push --set-upstream origin user-${TEAM}2
-git checkout user-${TEAM}3
-git push --set-upstream origin user-${TEAM}3
+git checkout user-${TEAM}1; 
+git push --set-upstream origin user-${TEAM}1; 
+git checkout user-${TEAM}2; 
+git push --set-upstream origin user-${TEAM}2;
+git checkout user-${TEAM}3;
+git push --set-upstream origin user-${TEAM}3;
 done
-
 
 
 
