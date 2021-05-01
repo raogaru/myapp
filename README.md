@@ -1,17 +1,22 @@
 ######################################################################
-# PROCESS FOR CREATING JENKINS JOB
+# Documentation for configuring CICD pipeline
 ######################################################################
-# myapp application code for testing pipeline
 
-Step-1: Create new Jenkins job named "Generate-CI-CD-using-JobDSL" using "Freestyle project" using "Process Job DSLs" build-step and use the code in CICD-jobs.JobDSL
+Step-1: Configure Git using instructions provided in setup/git/README.md
 
-Step-2: Execute Job "Generate-CI-CD-using-JobDSL"
+Step-2: Configure PostgreSQL using instructions provided in setup/postgres/README.md
 
-Step-3: Create new Jenkins job named "RAO-CI-00-pipeline" usinga "Pipeline"  option with pipeline script code from myapp.git/CI-pipeline.JobDSL
+Step-3: Configure Liquibase using instructions provided in setup/liquibase/README.md
 
-Step-4: Create new Jenkins job named "RAO-CD-00-pipeline" usinga "Pipeline"  option with pipeline script code from myapp.git/CD-pipeline.JobDSL
+Step-4: Configure Jenkins Server using instructions provided in setup/jenkins/README.md
 
-Step-5: Above job will generate CI and CD jobs and views
+Step-5: Configure Jenkins CI/CD jobs, views and pipelines using instructions provided in setup/jenkins/README.md 
+
+Step-6: Simulate agile team member code check-ins using instructions provided in setup/checkin/README.md
+
+Step-7: Run CI Pipeline job using instructions provided in setup/execute/README.md
+
+Step-8: Run CD Pipeline job using instructions provided in setup/execute/README.md
 
 
 ######################################################################
