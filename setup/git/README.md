@@ -46,5 +46,7 @@ git checkout user-${TEAM}3;
 git push --set-upstream origin user-${TEAM}3;
 done
 
-
+# configure dummy file
+mkdir -p src/app/dummy/file_0.txt
+echo "hello world" > src/app/dummy
 
