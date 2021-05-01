@@ -1,4 +1,5 @@
 V_DB=${1}
+
 liquibase \
   --driver=org.postgresql.Driver \
   --classpath=/Users/rao/.jenkins/war/WEB-INF/lib/postgresql-42.2.20.jar \
