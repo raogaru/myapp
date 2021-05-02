@@ -17,13 +17,27 @@ job('RAO-CI-10-Enter-Build') {
 	}
 }
 // ######################################################################
-job('RAO-CI-20-Team-Build') {
-	description('RAO-CI-20-Team-Build')
+job('RAO-CI-20-Team-Build-MARS') {
+	description('RAO-CI-20-Team-Build-MARS')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./build.sh earth')
-        shell('./build.sh mars')
-        shell('./build.sh venus')
+        shell('./build.sh team mars')
+	}
+}
+// ######################################################################
+job('RAO-CI-20-Team-Build-VENUS') {
+	description('RAO-CI-20-Team-Build-VENUS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh team venus')
+	}
+}
+// ######################################################################
+job('RAO-CI-20-Team-Build-PLUTO') {
+	description('RAO-CI-20-Team-Build-PLUTO')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh team pluto')
 	}
 }
 // ######################################################################
@@ -78,7 +92,12 @@ pipeline {
         }
         stage('Team') {
             steps {
-                build 'RAO-CI-20-Team-Build'
+                parallel
+		(
+                build 'RAO-CI-20-Team-Build-MARS'
+                build 'RAO-CI-20-Team-Build-VENUS'
+                build 'RAO-CI-20-Team-Build-PLUTO'
+		)
             }
         }
         stage('System') {
