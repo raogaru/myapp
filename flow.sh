@@ -161,7 +161,7 @@ f_flow_validate_team_branches
 f_flow_list_commits_by_each_team
 f_flow_drop_build_branches
 f_flow_recreate_build_branches
-f_flow_drop_and_recreate_build_branches
+f_flow_merge_team_branches_to_build_branches
 
 git checkout master
 LineHeader "Checkout master" 
