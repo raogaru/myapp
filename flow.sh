@@ -70,6 +70,8 @@ do
 	ECHO "git log origin/master..build-${TEAM}" 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > ${BUILD_DIR}/git_commits_by_${TEAM}.lst
+	TEAM_${TEAM}_COMMITS=$(wc -l ${BUILD_DIR}/git_commits_by_${TEAM}.lst)
+	ADDENV "TEAM_${TEAM}_COMMITS=${TEAM_${TEAM}_COMMITS}"
 done
 }
 # ------------------------------------------------------------
