@@ -51,7 +51,7 @@ LineHeader "Compare teams with team-branches"
 if [ $r -eq 0 ]; then
 	ECHO "team and team-branches match"
 else
-	WARN "team and team-branches match"
+	WARN "team and team-branches does not match"
 
 	LineHeader "Team branches missing. Branches to be created: "
 	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
