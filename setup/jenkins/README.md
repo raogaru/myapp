@@ -51,5 +51,13 @@ Step-1: Create new Jenkins job named "Generate-CI-CD-Jobs-using-JobDSL"
 
 Step-2: Build Job "Generate-CI-CD-Jobs-using-JobDSL"
 
-Step-3: Above job will generate CI and CD jobs and views
+	Above job will generate CI and CD jobs and views
+
+	Verify that pipeline jobs and views are created
+
+	Execute each of CI/CD job manually
+
+Step-3: You are ready to execute CI/CD pipelines
+
+# ######################################################################
 
