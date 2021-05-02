@@ -35,13 +35,21 @@ http://localhost:8080/
 # Configure Jenkins Jobs, Views and Pipelines
 # ######################################################################
 
-Step-1: Create new Jenkins job named "Generate-CI-CD-using-JobDSL" using "Freestyle project" using "Process Job DSLs" build-step and use the code in CICD-jobs.JobDSL
+Step-1: Create new Jenkins job named "Generate-CI-CD-Jobs-using-JobDSL" 
 
-Step-2: Execute Job "Generate-CI-CD-using-JobDSL"
+	project = "Freestyle project"
 
-Step-3: Create new Jenkins job named "RAO-CI-00-pipeline" usinga "Pipeline"  option with pipeline script code from myapp.git/CI-pipeline.JobDSL
+	Choose "Git" as "Source Code Management"
 
-Step-4: Create new Jenkins job named "RAO-CD-00-pipeline" usinga "Pipeline"  option with pipeline script code from myapp.git/CD-pipeline.JobDSL
+	Repository URL: https://github.com/raogaru/myapp.git
 
-Step-5: Above job will generate CI and CD jobs and views
+	Add build step = "Process Job DSLs" 
+
+	choose look on File system 
+
+	enter setup/jenkins/CICD_jobs.groovy
+
+Step-2: Build Job "Generate-CI-CD-Jobs-using-JobDSL"
+
+Step-3: Above job will generate CI and CD jobs and views
 
