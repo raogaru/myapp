@@ -5,7 +5,6 @@ vACTION=${1}
 source myapp.env
 
 BUILD_ENV_FILE=/tmp/build.env
-BUILD_TEAMS="earth mars venus"
 v_debug=1
 vLINE="######################################################################"
 vLINE2="----------------------------------------------------------------------"
