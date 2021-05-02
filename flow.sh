@@ -11,10 +11,13 @@ touch ${BUILD_ENV_FILE}
 chmod 755 ${BUILD_ENV_FILE}
 BUILD_NUM=$(date '+%Y%m%d%H%M')
 ADDENV "BUILD_NUM=${BUILD_NUM}"
-echo ${vLINE}
+BUILD_DIR=/tmp/build/${BUILD_NUM}
+ADDENV "BUILD_DIR=${BUILD_DIR}"
+ADDENV "BUILD_TEAMS=${BUILD_TEAMS}"
+ECHO ${vLINE}
 ECHO "Build Initialized - BUILD_NUM is \"${BUILD_NUM}\""
-echo ${vLINE}
-mkdir -p /tmp/${BUILD_NUM}
+ECHO ${vLINE}
+mkdir -p ${BUILD_DIR}
 }
 # ------------------------------------------------------------
 f_flow_checkout_master() {
