@@ -1,50 +1,16 @@
 #!/bin/bash
-
+# ######################################################################
+# CI Build Git Flow
+# ######################################################################
 vACTION=${1}
-
 source myapp.env
-
-BUILD_ENV_FILE=/tmp/build.env
-v_debug=1
-vLINE="######################################################################"
-vLINE2="----------------------------------------------------------------------"
-# ------------------------------------------------------------
-DEBUG () {
-[[ ${v_debug} -gt 0 ]] && echo "$*"
-}
-# ------------------------------------------------------------
-ECHO () {
-echo "$*"
-}
-# ------------------------------------------------------------
-ECHODO () {
-echo "$*"
-"$*"
-}
-# ------------------------------------------------------------
-WARN () {
-echo "WARNING:$*"
-}
-# ------------------------------------------------------------
-ERROR () {
-echo "ERROR:$*"; exit 1
-}
-# ------------------------------------------------------------
-LineHeader () {
-echo ${vLINE2}
-echo "$*"
-}
-# ------------------------------------------------------------
-UpdateEnvFile () {
-echo "export $*" >> ${BUILD_ENV_FILE}
-}
 # ------------------------------------------------------------
 f_flow_init() {
 rm -f ${BUILD_ENV_FILE}
 touch ${BUILD_ENV_FILE}
 chmod 755 ${BUILD_ENV_FILE}
 BUILD_NUM=$(date '+%Y%m%d%H%M')
-UpdateEnvFile "BUILD_NUM=${BUILD_NUM}"
+ADDENV "BUILD_NUM=${BUILD_NUM}"
 echo ${vLINE}
 ECHO "Build Initialized - BUILD_NUM is \"${BUILD_NUM}\""
 echo ${vLINE}
@@ -104,7 +70,7 @@ do
 done
 }
 # ------------------------------------------------------------
-# Drop and recreate build branches 
+# Drop,recreate build branches and then merge team branches to build branches
 #Why?: Agile teams can continue to check-in code into team branches while pipeline uses a snapshot of team branch in the name of build branch"
 # ------------------------------------------------------------
 f_flow_drop_build_branches () {
@@ -152,9 +118,9 @@ do
 done
 }
 # ------------------------------------------------------------
-######################################################################
+# ######################################################################
 # MAIN PROGRAM
-######################################################################
+# ######################################################################
 f_flow_init
 f_flow_checkout_master
 f_flow_validate_team_branches
@@ -167,3 +133,6 @@ git checkout master
 LineHeader "Checkout master" 
 
 LineHeader "Completed."
+#
+# ######################################################################
+#
