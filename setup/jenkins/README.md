@@ -55,7 +55,7 @@ Step-2: Build Job "Generate-CI-CD-Jobs-using-JobDSL"
 
 	Verify that pipeline jobs and views are created
 
-	Execute each of CI/CD job manually
+	Execute each of CI/CD job manually. BUG: JobDSL generated jobs failing during first time execution
 
 Step-3: You are ready to execute CI/CD pipelines
 
