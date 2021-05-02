@@ -13,7 +13,7 @@ BUILD_NUM=$(date '+%Y%m%d%H%M')
 ADDENV "BUILD_NUM=${BUILD_NUM}"
 BUILD_DIR=/tmp/build/${BUILD_NUM}
 ADDENV "BUILD_DIR=${BUILD_DIR}"
-ADDENV "BUILD_TEAMS=${BUILD_TEAMS}"
+ADDENV "BUILD_TEAMS=\"${BUILD_TEAMS}\""
 ECHO ${vLINE}
 ECHO "Build Initialized - BUILD_NUM is \"${BUILD_NUM}\""
 ECHO ${vLINE}
@@ -34,18 +34,18 @@ LineHeader "Current branch"
 # ------------------------------------------------------------
 f_flow_validate_team_branches() {
 LineHeader "List development teams"
-	rm -f /tmp/${BUILD_NUM}/teams.tmp
-	for TEAM in ${BUILD_TEAMS}; do echo "${TEAM}" >> /tmp/${BUILD_NUM}/teams.tmp; done
-	cat /tmp/${BUILD_NUM}/teams.tmp |sort > /tmp/${BUILD_NUM}/teams.lst
-	cat /tmp/${BUILD_NUM}/teams.lst
-	rm -f /tmp/${BUILD_NUM}/teams.tmp
+	rm -f ${BUILD_DIR}/teams.tmp
+	for TEAM in ${BUILD_TEAMS}; do echo "${TEAM}" >> ${BUILD_DIR}/teams.tmp; done
+	cat ${BUILD_DIR}/teams.tmp |sort > ${BUILD_DIR}/teams.lst
+	cat ${BUILD_DIR}/teams.lst
+	rm -f ${BUILD_DIR}/teams.tmp
 
 LineHeader "Identify list of team-branches"
-	git branch -a | grep remote | grep "\/team\-" | sed -e 's/^.*\/team-//'|sort > /tmp/${BUILD_NUM}/git_team_branches.lst
-	cat /tmp/${BUILD_NUM}/git_team_branches.lst | sed -e 's/^/team\-/'
+	git branch -a | grep remote | grep "\/team\-" | sed -e 's/^.*\/team-//'|sort > ${BUILD_DIR}/git_team_branches.lst
+	cat ${BUILD_DIR}/git_team_branches.lst | sed -e 's/^/team\-/'
 
 LineHeader "Compare teams with team-branches"
-	diff /tmp/${BUILD_NUM}/teams.lst /tmp/${BUILD_NUM}/git_team_branches.lst
+	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst
 	r=$?
 
 if [ $r -eq 0 ]; then
@@ -54,10 +54,10 @@ else
 	WARN "team and team-branches match"
 
 	LineHeader "Team branches missing. Branches to be created: "
-	diff /tmp/${BUILD_NUM}/teams.lst /tmp/${BUILD_NUM}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
+	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
 
 	LineHeader "Team branches found for unknown team. Branches to be deleted:"
-	diff /tmp/${BUILD_NUM}/teams.lst /tmp/${BUILD_NUM}/git_team_branches.lst |grep ">" |sed -e 's/^\> //' | sed -e 's/^/team\-/'
+	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst |grep ">" |sed -e 's/^\> //' | sed -e 's/^/team\-/'
 fi
 }
 # ------------------------------------------------------------
@@ -69,7 +69,7 @@ do
 	LineHeader "List of commits by team \"${TEAM}\":"
 	ECHO "git log origin/master..build-${TEAM}" 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
-	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > /tmp/${BUILD_NUM}/git_commits_by_${TEAM}.lst
+	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > ${BUILD_DIR}/git_commits_by_${TEAM}.lst
 done
 }
 # ------------------------------------------------------------
