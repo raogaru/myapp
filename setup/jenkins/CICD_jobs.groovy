@@ -10,79 +10,79 @@ def vViewNameCD="RAO-CD"
 // ######################################################################
 // ######################################################################
 job('RAO-CI-10-Enter-Build') {
-	description('RAO-CI-10-Enter-Build')
+	description('RAO-CI-10-Build-Gate')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./flow.sh')
+        shell('./BuildGate.sh')
 	}
 }
 // ######################################################################
-job('RAO-CI-20-Build-Team-MARS') {
-	description('RAO-CI-20-Build-Team-MARS')
+job('RAO-CI-21-Build-Team-MARS') {
+	description('RAO-CI-21-Build-Team-MARS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team mars')
 	}
 }
-// ######################################################################
-job('RAO-CI-20-Build-Team-VENUS') {
-	description('RAO-CI-20-Build-Team-VENUS')
-	scm {github('raogaru/myapp')}
-	steps {
-        shell('./build.sh team venus')
-	}
-}
-// ######################################################################
-job('RAO-CI-20-Build-Team-PLUTO') {
-	description('RAO-CI-20-Build-Team-PLUTO')
-	scm {github('raogaru/myapp')}
-	steps {
-        shell('./build.sh team pluto')
-	}
-}
-// ######################################################################
-job('RAO-CI-30-Deploy-Team-MARS') {
-	description('RAO-CI-50-Deploy-Team-MARS')
+// ----------------------------------------------------------------------
+job('RAO-CI-31-Deploy-Team-MARS') {
+	description('RAO-CI-31-Deploy-Team-MARS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./deploy.sh team mars')
 	}
 }
-// ######################################################################
-job('RAO-CI-30-Deploy-Team-VENUS') {
-	description('RAO-CI-50-Deploy-Team-VENUS')
-	scm {github('raogaru/myapp')}
-	steps {
-        shell('./deploy.sh team venus')
-	}
-}
-// ######################################################################
-job('RAO-CI-30-Deploy-Team-PLUTO') {
-	description('RAO-CI-50-Deploy-Team-PLUTO')
-	scm {github('raogaru/myapp')}
-	steps {
-        shell('./deploy.sh team pluto')
-	}
-}
-// ######################################################################
-job('RAO-CI-40-Test-Team-MARS') {
-	description('RAO-CI-40-Test-Team-MARS')
+// ----------------------------------------------------------------------
+job('RAO-CI-41-Test-Team-MARS') {
+	description('RAO-CI-41-Test-Team-MARS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team mars')
 	}
 }
 // ######################################################################
-job('RAO-CI-40-Test-Team-VENUS') {
-	description('RAO-CI-40-Test-Team-VENUS')
+job('RAO-CI-22-Build-Team-VENUS') {
+	description('RAO-CI-22-Build-Team-VENUS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh team venus')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-32-Deploy-Team-VENUS') {
+	description('RAO-CI-32-Deploy-Team-VENUS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh team venus')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-42-Test-Team-VENUS') {
+	description('RAO-CI-42-Test-Team-VENUS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team venus')
 	}
 }
 // ######################################################################
-job('RAO-CI-40-Test-Team-PLUTO') {
-	description('RAO-CI-40-Test-Team-PLUTO')
+job('RAO-CI-23-Build-Team-PLUTO') {
+	description('RAO-CI-23-Build-Team-PLUTO')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./build.sh team pluto')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-33-Deploy-Team-PLUTO') {
+	description('RAO-CI-33-Deploy-Team-PLUTO')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh team pluto')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-43-Test-Team-PLUTO') {
+	description('RAO-CI-43-Test-Team-PLUTO')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team pluto')
@@ -93,6 +93,8 @@ job('RAO-CI-50-System-Gate') {
 	description('RAO-CI-50-Build-System-Gate')
 	steps {
         shell('echo system gate')
+        shell('echo SYSTEM_COMMITS=YES >> /tmp/build.env')
+        shell('echo SYSTEM_BUILD=SUCCESS >> /tmp/build.env')
 	}
 }
 // ----------------------------------------------------------------------
@@ -182,23 +184,23 @@ pipeline {
 	    parallel {
 	    stage('Team-MARS') {
             steps {
-                build 'RAO-CI-20-Build-Team-MARS'
-                build 'RAO-CI-30-Deploy-Team-MARS'
-                build 'RAO-CI-40-Test-Team-MARS'
+                build 'RAO-CI-21-Build-Team-MARS'
+                build 'RAO-CI-31-Deploy-Team-MARS'
+                build 'RAO-CI-41-Test-Team-MARS'
             }
 	    }
 	    stage('Team-VENUS') {
             steps {
-                build 'RAO-CI-20-Build-Team-VENUS'
-                build 'RAO-CI-30-Deploy-Team-VENUS'
-                build 'RAO-CI-40-Test-Team-VENUS'
+                build 'RAO-CI-22-Build-Team-VENUS'
+                build 'RAO-CI-32-Deploy-Team-VENUS'
+                build 'RAO-CI-42-Test-Team-VENUS'
             }
 	    }
 	    stage('Team-PLUTO') {
             steps {
-                build 'RAO-CI-20-Build-Team-PLUTO'
-                build 'RAO-CI-30-Deploy-Team-PLUTO'
-                build 'RAO-CI-40-Test-Team-PLUTO'
+                build 'RAO-CI-23-Build-Team-PLUTO'
+                build 'RAO-CI-33-Deploy-Team-PLUTO'
+                build 'RAO-CI-43-Test-Team-PLUTO'
             }
             }
 	    }
