@@ -5,6 +5,9 @@
 ./jenkins-cli.sh delete-job RAO-CI-00-Pipeline
 ./jenkins-cli.sh delete-job RAO-CI-10-Enter-Build
 ./jenkins-cli.sh delete-job RAO-CI-20-Team-Build
+./jenkins-cli.sh delete-job RAO-CI-20-Team-Build-MARS
+./jenkins-cli.sh delete-job RAO-CI-20-Team-Build-VENUS
+./jenkins-cli.sh delete-job RAO-CI-20-Team-Build-PLUTO
 ./jenkins-cli.sh delete-job RAO-CI-30-System-Build
 ./jenkins-cli.sh delete-job RAO-CI-40-Release-Build
 ./jenkins-cli.sh delete-job RAO-CI-50-Deploy-Pipeline-Test
