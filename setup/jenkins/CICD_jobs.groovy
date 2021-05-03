@@ -9,11 +9,19 @@ def vViewNameCD="RAO-CD"
 // CI-PIPELINE JOBS
 // ######################################################################
 // ######################################################################
-job('RAO-CI-10-Enter-Build') {
-	description('RAO-CI-10-Build-Gate')
+job('RAO-CI-10-Pre-Build') {
+	description('RAO-CI-10-Pre-Build')
+	steps {
+        shell('echo hello')
+	}
+}
+// ######################################################################
+job('RAO-CI-20-Team-Gate') {
+	description('RAO-CI-20-Team-Gate')
+	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./BuildGate.sh')
+        shell('./TeamGate.sh')
 	}
 }
 // ######################################################################
@@ -177,10 +185,13 @@ pipeline {
     stages {
         stage('Enter') {
             steps {
-                build 'RAO-CI-10-Enter-Build'
+                build 'RAO-CI-10-Pre-Build'
             }
         }
-        stage('Team') {
+        stage('TeamGate') {
+            steps {
+                build 'RAO-CI-20-Team-Gate'
+            }
 	    parallel {
 	    stage('Team-MARS') {
             steps {
@@ -205,7 +216,7 @@ pipeline {
             }
 	    }
         }
-        stage('System') {
+        stage('SystemGate') {
             steps {
                 build 'RAO-CI-50-System-Gate'
                 build 'RAO-CI-51-Build-System'
