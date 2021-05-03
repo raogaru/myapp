@@ -180,20 +180,26 @@ pipeline {
         }
         stage('Team') {
 	    parallel {
+	    stage('Team-MARS') {
             steps {
                 build 'RAO-CI-20-Build-Team-MARS'
                 build 'RAO-CI-30-Deploy-Team-MARS'
                 build 'RAO-CI-40-Test-Team-MARS'
             }
+	    }
+	    stage('Team-VENUS') {
             steps {
                 build 'RAO-CI-20-Build-Team-VENUS'
                 build 'RAO-CI-30-Deploy-Team-VENUS'
                 build 'RAO-CI-40-Test-Team-VENUS'
             }
+	    }
+	    stage('Team-PLUTO') {
             steps {
                 build 'RAO-CI-20-Build-Team-PLUTO'
                 build 'RAO-CI-30-Deploy-Team-PLUTO'
                 build 'RAO-CI-40-Test-Team-PLUTO'
+            }
             }
 	    }
         }
