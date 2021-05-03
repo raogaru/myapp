@@ -3,8 +3,6 @@ source myapp.env
 vTYPE="${1}"
 vTEAM="${2}"
 vTASK="DEPLOY:${vTYPE}-${vTEAM}"
-
-vTASK="DEPLOY:${vTEAM}"
 echo "${vLINE}"
 echo "${vTASK} Started"
 
