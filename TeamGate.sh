@@ -5,7 +5,7 @@
 vACTION=${1}
 source myapp.env
 # ------------------------------------------------------------
-f_flow_init() {
+f_teamgate_init() {
 rm -f ${BUILD_ENV_FILE}
 touch ${BUILD_ENV_FILE}
 chmod 755 ${BUILD_ENV_FILE}
@@ -20,7 +20,7 @@ ECHO ${vLINE}
 mkdir -p ${BUILD_DIR}
 }
 # ------------------------------------------------------------
-f_flow_checkout_master() {
+f_teamgate_checkout_master() {
 ECHO "Checkout master branch"
 	git checkout master
 
@@ -32,7 +32,7 @@ LineHeader "Current branch"
 	[[ "${x1}" != "master" ]] && ERROR "Current branch is not \"master\"."
 }
 # ------------------------------------------------------------
-f_flow_validate_team_branches() {
+f_teamgate_validate_team_branches() {
 LineHeader "List development teams"
 	rm -f ${BUILD_DIR}/teams.tmp
 	for TEAM in ${BUILD_TEAMS}; do echo "${TEAM}" >> ${BUILD_DIR}/teams.tmp; done
@@ -61,7 +61,7 @@ else
 fi
 }
 # ------------------------------------------------------------
-f_flow_list_commits_by_each_team () {
+f_teamgate_list_commits_by_each_team () {
 ECHO ${vLINE}
 ECHO "Compare team branch \"team-${TEAM}\" with build branch \"build-${TEAM}\""
 for TEAM in ${BUILD_TEAMS}
@@ -77,7 +77,7 @@ done
 # Drop,recreate build branches and then merge team branches to build branches
 #Why?: Agile teams can continue to check-in code into team branches while pipeline uses a snapshot of team branch in the name of build branch"
 # ------------------------------------------------------------
-f_flow_drop_build_branches () {
+f_teamgate_drop_build_branches () {
 LineHeader "Drop build branches"
 for TEAM in ${BUILD_TEAMS}
 do
@@ -90,7 +90,7 @@ do
 done
 }
 # ------------------------------------------------------------
-f_flow_recreate_build_branches () {
+f_teamgate_recreate_build_branches () {
 LineHeader "Create build branches"
 git checkout master
 for TEAM in ${BUILD_TEAMS}
@@ -104,7 +104,7 @@ do
 done
 }
 # ------------------------------------------------------------
-f_flow_merge_team_branches_to_build_branches () {
+f_teamgate_merge_team_branches_to_build_branches () {
 LineHeader "Merge team branches into build branches." 
 for TEAM in ${BUILD_TEAMS}
 do
@@ -114,7 +114,7 @@ do
 	if [ $r -ne 0 ]; then
 		WARN "git checkout build-${TEAM} failed"
 	fi
-	git merge team-${TEAM} -m "merge-by-build-flow-${BUILD_NUM}"
+	git merge team-${TEAM} -m "merge-by-Team-Gate-flow-${BUILD_NUM}"
 	r=$?
 	if [ $r -ne 0 ]; then
 		WARN "git merge build-${TEAM} failed"
@@ -125,13 +125,13 @@ done
 # ######################################################################
 # MAIN PROGRAM
 # ######################################################################
-f_flow_init
-f_flow_checkout_master
-f_flow_validate_team_branches
-f_flow_list_commits_by_each_team
-f_flow_drop_build_branches
-f_flow_recreate_build_branches
-f_flow_merge_team_branches_to_build_branches
+f_teamgate_init
+f_teamgate_checkout_master
+f_teamgate_validate_team_branches
+f_teamgate_list_commits_by_each_team
+f_teamgate_drop_build_branches
+f_teamgate_recreate_build_branches
+f_teamgate_merge_team_branches_to_build_branches
 
 git checkout master
 LineHeader "Checkout master" 
