@@ -17,61 +17,149 @@ job('RAO-CI-10-Enter-Build') {
 	}
 }
 // ######################################################################
-job('RAO-CI-20-Team-Build-MARS') {
-	description('RAO-CI-20-Team-Build-MARS')
+job('RAO-CI-20-Build-Team-MARS') {
+	description('RAO-CI-20-Build-Team-MARS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team mars')
 	}
 }
 // ######################################################################
-job('RAO-CI-20-Team-Build-VENUS') {
-	description('RAO-CI-20-Team-Build-VENUS')
+job('RAO-CI-20-Build-Team-VENUS') {
+	description('RAO-CI-20-Build-Team-VENUS')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team venus')
 	}
 }
 // ######################################################################
-job('RAO-CI-20-Team-Build-PLUTO') {
-	description('RAO-CI-20-Team-Build-PLUTO')
+job('RAO-CI-20-Build-Team-PLUTO') {
+	description('RAO-CI-20-Build-Team-PLUTO')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team pluto')
 	}
 }
 // ######################################################################
-job('RAO-CI-30-System-Build') {
-	description('RAO-CI-30-System-Build')
+job('RAO-CI-30-Deploy-Team-MARS') {
+	description('RAO-CI-50-Deploy-Team-MARS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh team mars')
+	}
+}
+// ######################################################################
+job('RAO-CI-30-Deploy-Team-VENUS') {
+	description('RAO-CI-50-Deploy-Team-VENUS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh team venus')
+	}
+}
+// ######################################################################
+job('RAO-CI-30-Deploy-Team-PLUTO') {
+	description('RAO-CI-50-Deploy-Team-PLUTO')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./deploy.sh team pluto')
+	}
+}
+// ######################################################################
+job('RAO-CI-40-Test-Team-MARS') {
+	description('RAO-CI-40-Test-Team-MARS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./test.sh team mars')
+	}
+}
+// ######################################################################
+job('RAO-CI-40-Test-Team-VENUS') {
+	description('RAO-CI-40-Test-Team-VENUS')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./test.sh team venus')
+	}
+}
+// ######################################################################
+job('RAO-CI-40-Test-Team-PLUTO') {
+	description('RAO-CI-40-Test-Team-PLUTO')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./test.sh team pluto')
+	}
+}
+// ######################################################################
+job('RAO-CI-50-System-Gate') {
+	description('RAO-CI-50-Build-System-Gate')
+	steps {
+        shell('echo system gate')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-51-Build-System') {
+	description('RAO-CI-51-Build-System')
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh system')
 	}
 }
-// ######################################################################
-job('RAO-CI-40-Release-Build') {
-	description('RAO-CI-40-Release-Build')
+// ----------------------------------------------------------------------
+job('RAO-CI-52-Deploy-System') {
+	description('RAO-CI-52-Deploy-System')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./build.sh release')
+        shell('./deploy.sh system')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-53-Test-System') {
+	description('RAO-CI-53-Test-System')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./test.sh system')
 	}
 }
 // ######################################################################
-job('RAO-CI-50-Deploy-Pipeline-Test') {
-	description('RAO-CI-50-Deploy-Pipeline-Test')
+job('RAO-CI-60-Release-Gate') {
+	description('RAO-CI-60-Release-Gate')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh PIPE')
+        shell('echo release gate')
 	}
 }
-// ######################################################################
-job('RAO-CI-55-Execute-Pipeline-Test') {
-	description('RAO-CI-55-Execute-Pipeline-Test')
+// ----------------------------------------------------------------------
+job('RAO-CI-61-Release-Prepare') {
+	description('RAO-CI-61-Release-Prepare')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./test.sh PIPE')
+        shell('./release.sh prepare')
 	}
-} 
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-62-Release-Verify') {
+	description('RAO-CI-62-Release-Verify')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./release.sh verify')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-63-Release-Publish') {
+	description('RAO-CI-63-Release-Publish')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./release.sh publish')
+	}
+}
+// ----------------------------------------------------------------------
+job('RAO-CI-64-Release-Notify') {
+	description('RAO-CI-64-Release-Notify')
+	scm {github('raogaru/myapp')}
+	steps {
+        shell('./release.sh notify')
+	}
+}
+// ----------------------------------------------------------------------
 // ######################################################################
 pipelineJob('RAO-CI-00-Pipeline') {
   definition {
@@ -91,33 +179,39 @@ pipeline {
             }
         }
         stage('Team') {
+	    parallel {
             steps {
-                parallel
-		(
-                build 'RAO-CI-20-Team-Build-MARS'
-                build 'RAO-CI-20-Team-Build-VENUS'
-                build 'RAO-CI-20-Team-Build-PLUTO'
-		)
+                build 'RAO-CI-20-Build-Team-MARS'
+                build 'RAO-CI-30-Deploy-Team-MARS'
+                build 'RAO-CI-40-Test-Team-MARS'
             }
+            steps {
+                build 'RAO-CI-20-Build-Team-VENUS'
+                build 'RAO-CI-30-Deploy-Team-VENUS'
+                build 'RAO-CI-40-Test-Team-VENUS'
+            }
+            steps {
+                build 'RAO-CI-20-Build-Team-PLUTO'
+                build 'RAO-CI-30-Deploy-Team-PLUTO'
+                build 'RAO-CI-40-Test-Team-PLUTO'
+            }
+	    }
         }
         stage('System') {
             steps {
-                build 'RAO-CI-30-System-Build'
+                build 'RAO-CI-50-System-Gate'
+                build 'RAO-CI-51-Build-System'
+                build 'RAO-CI-52-Deploy-System'
+                build 'RAO-CI-53-Test-System'
             }
         }
         stage('Release') {
             steps {
-                build 'RAO-CI-40-Release-Build'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                build 'RAO-CI-50-Deploy-Pipeline-Test'
-            }
-        }
-        stage('Test') {
-            steps {
-                build 'RAO-CI-55-Execute-Pipeline-Test'
+                build 'RAO-CI-60-Release-Gate'
+                build 'RAO-CI-61-Release-Prepare'
+                build 'RAO-CI-62-Release-Verify'
+                build 'RAO-CI-63-Release-Publish'
+                build 'RAO-CI-64-Release-Notify'
             }
         }
     }
