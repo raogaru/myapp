@@ -176,64 +176,62 @@ pipelineJob('RAO-CI-00-Pipeline') {
     cps {
       script('''
 pipeline {
-    agent any
+	agent any
 
-    options {
-        timestamps()
-    }
+	options {
+		timestamps()
+	}
 
-    stages {
-        stage('Enter') {
-            steps {
-                build 'RAO-CI-10-Pre-Build'
-            }
-        }
-        stage('TeamGate') {
-            steps {
-                build 'RAO-CI-20-Team-Gate'
-            }
-	    parallel {
-	    stage('Team-MARS') {
-            steps {
-                build 'RAO-CI-21-Build-Team-MARS'
-                build 'RAO-CI-31-Deploy-Team-MARS'
-                build 'RAO-CI-41-Test-Team-MARS'
-            }
-	    }
-	    stage('Team-VENUS') {
-            steps {
-                build 'RAO-CI-22-Build-Team-VENUS'
-                build 'RAO-CI-32-Deploy-Team-VENUS'
-                build 'RAO-CI-42-Test-Team-VENUS'
-            }
-	    }
-	    stage('Team-PLUTO') {
-            steps {
-                build 'RAO-CI-23-Build-Team-PLUTO'
-                build 'RAO-CI-33-Deploy-Team-PLUTO'
-                build 'RAO-CI-43-Test-Team-PLUTO'
-            }
-            }
-	    }
-        }
-        stage('SystemGate') {
-            steps {
-                build 'RAO-CI-50-System-Gate'
-                build 'RAO-CI-51-Build-System'
-                build 'RAO-CI-52-Deploy-System'
-                build 'RAO-CI-53-Test-System'
-            }
-        }
-        stage('Release') {
-            steps {
-                build 'RAO-CI-60-Release-Gate'
-                build 'RAO-CI-61-Release-Prepare'
-                build 'RAO-CI-62-Release-Verify'
-                build 'RAO-CI-63-Release-Publish'
-                build 'RAO-CI-64-Release-Notify'
-            }
-        }
-    }
+	stages {
+		stage('Enter') {
+			steps {
+				build 'RAO-CI-10-Pre-Build'
+				build 'RAO-CI-20-Team-Gate'
+			}
+		}
+		stage('TeamGate') {
+			parallel {
+				stage('Team-MARS') {
+					steps {
+						build 'RAO-CI-21-Build-Team-MARS'
+						build 'RAO-CI-31-Deploy-Team-MARS'
+						build 'RAO-CI-41-Test-Team-MARS'
+					}
+				}
+				stage('Team-VENUS') {
+					steps {
+						build 'RAO-CI-22-Build-Team-VENUS'
+						build 'RAO-CI-32-Deploy-Team-VENUS'
+						build 'RAO-CI-42-Test-Team-VENUS'
+					}
+				}
+				stage('Team-PLUTO') {
+					steps {
+						build 'RAO-CI-23-Build-Team-PLUTO'
+						build 'RAO-CI-33-Deploy-Team-PLUTO'
+						build 'RAO-CI-43-Test-Team-PLUTO'
+					}
+				}
+			}
+		}
+		stage('SystemGate') {
+			steps {
+				build 'RAO-CI-50-System-Gate'
+				build 'RAO-CI-51-Build-System'
+				build 'RAO-CI-52-Deploy-System'
+				build 'RAO-CI-53-Test-System'
+			}
+		}
+		stage('ReleaseGate') {
+			steps {
+				build 'RAO-CI-60-Release-Gate'
+				build 'RAO-CI-61-Release-Prepare'
+				build 'RAO-CI-62-Release-Verify'
+				build 'RAO-CI-63-Release-Publish'
+				build 'RAO-CI-64-Release-Notify'
+			}
+		}
+	}
 }
       '''.stripIndent())
       sandbox()
@@ -292,9 +290,7 @@ pipelineJob('RAO-CD-00-Pipeline') {
 pipeline {
     agent any
 
-    options {
-        timestamps()
-    }
+    options { timestamps() }
 
     stages {
         stage('Security') {
