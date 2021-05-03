@@ -236,7 +236,7 @@ job('RAO-CD-10-Deploy-Security-Test') {
 	description('RAO-CD-10-Deploy-Security-Test')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh SECURITY')
+        shell('./deploy.sh ENV SECURITY')
 	}
 }
 // ######################################################################
@@ -244,7 +244,7 @@ job('RAO-CD-20-Deploy-Performance-Test') {
 	description('RAO-CD-20-Deploy-Performance-Test')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh PERFORMANCE')
+        shell('./deploy.sh ENV PERFORMANCE')
 	}
 }
 // ######################################################################
@@ -252,7 +252,7 @@ job('RAO-CD-30-Deploy-Acceptance-Test') {
 	description('RAO-CD-30-Deploy-Acceptance-Test')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh ACCEPTANCE')
+        shell('./deploy.sh ENV ACCEPTANCE')
 	}
 }
 // ######################################################################
@@ -260,7 +260,7 @@ job('RAO-CD-40-Deploy-Interface-Test') {
 	description('RAO-CD-40-Deploy-Interface-Test')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh INTERFACE')
+        shell('./deploy.sh ENV INTERFACE')
 	}
 }
 // ######################################################################
@@ -268,7 +268,7 @@ job('RAO-CD-50-Deploy-Production') {
 	description('RAO-CD-50-Deploy-Production')
 	scm {github('raogaru/myapp')}
 	steps {
-        shell('./deploy.sh PRODUCTION')
+        shell('./deploy.sh ENV PRODUCTION')
 	}
 }
 // ######################################################################

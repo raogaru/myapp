@@ -28,8 +28,8 @@ ECHO "${vTASK} Completed"
 ECHO "${vTASK} Result ${r}"
 
 if [ ${r} -gt ${RC_PASS_SCORE} ]; then
-	ECHO "${vTASK} SUCCESSS"
-	ADDENV "TEAM_BUILD_${vTEAM}=SUCCESSS"
+	ECHO "${vTASK} SUCCESS"
+	ADDENV "TEAM_BUILD_${vTEAM}=SUCCESS"
 	echo "${vLINE}" 
 	exit 0
 else
