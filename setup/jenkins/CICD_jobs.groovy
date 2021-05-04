@@ -335,7 +335,7 @@ pipeline {
 // JENKINS VIEWS
 // ######################################################################
 // ######################################################################
-listView("${vViewNameCI}") {
+listView("${vViewNameCI}-List") {
     description("${vViewNameCI}")
     filterBuildQueue()
     filterExecutors()
@@ -354,7 +354,7 @@ listView("${vViewNameCI}") {
     }
 }
 // ######################################################################
-listView("${vViewNameCD}") {
+listView("${vViewNameCD}-List") {
     description("${vViewNameCD}")
     filterBuildQueue()
     filterExecutors()
@@ -371,5 +371,16 @@ listView("${vViewNameCD}") {
         lastDuration()
         buildButton()
     }
+}
+// ######################################################################
+buildPipelineView("${vViewNameCI}-Pipe") {
+    filterBuildQueue()
+    filterExecutors()
+    title("${vViewNameCI}-Pipeline")
+    displayedBuilds(5)
+    selectedJob('RAO-CI-00-Pipeline')
+    alwaysAllowManualTrigger()
+    showPipelineParameters()
+    refreshFrequency(60)
 }
 // ######################################################################
