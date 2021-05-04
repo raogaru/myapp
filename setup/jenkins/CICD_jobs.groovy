@@ -11,7 +11,10 @@ def vViewNameCD="RAO-CD"
 // ######################################################################
 job('RAO-CI-10-Pre-Build') {
 	description('RAO-CI-10-Pre-Build')
-	wrappers { colorizeOutput() timestamps() }
+	wrappers {
+		colorizeOutput() 
+		timestamps() 
+	}
 	steps {
         shell('echo hello')
 	}
