@@ -15,6 +15,10 @@ job('RAO-CI-10-Pre-Build') {
 		colorizeOutput() 
 		timestamps() 
 	}
+	logRotator {
+		daysToKeep(1)
+		numToKeep(24)
+	}
 	steps {
         shell('echo hello')
 	}
@@ -22,7 +26,6 @@ job('RAO-CI-10-Pre-Build') {
 // ######################################################################
 job('RAO-CI-20-Team-Gate') {
 	description('RAO-CI-20-Team-Gate')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./TeamGate.sh')
@@ -31,7 +34,6 @@ job('RAO-CI-20-Team-Gate') {
 // ######################################################################
 job('RAO-CI-21-Build-Team-MARS') {
 	description('RAO-CI-21-Build-Team-MARS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team mars')
@@ -40,7 +42,6 @@ job('RAO-CI-21-Build-Team-MARS') {
 // ----------------------------------------------------------------------
 job('RAO-CI-31-Deploy-Team-MARS') {
 	description('RAO-CI-31-Deploy-Team-MARS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./deploy.sh team mars')
@@ -49,7 +50,6 @@ job('RAO-CI-31-Deploy-Team-MARS') {
 // ----------------------------------------------------------------------
 job('RAO-CI-41-Test-Team-MARS') {
 	description('RAO-CI-41-Test-Team-MARS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team mars')
@@ -58,7 +58,6 @@ job('RAO-CI-41-Test-Team-MARS') {
 // ######################################################################
 job('RAO-CI-22-Build-Team-VENUS') {
 	description('RAO-CI-22-Build-Team-VENUS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team venus')
@@ -67,7 +66,6 @@ job('RAO-CI-22-Build-Team-VENUS') {
 // ----------------------------------------------------------------------
 job('RAO-CI-32-Deploy-Team-VENUS') {
 	description('RAO-CI-32-Deploy-Team-VENUS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./deploy.sh team venus')
@@ -76,7 +74,6 @@ job('RAO-CI-32-Deploy-Team-VENUS') {
 // ----------------------------------------------------------------------
 job('RAO-CI-42-Test-Team-VENUS') {
 	description('RAO-CI-42-Test-Team-VENUS')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team venus')
@@ -85,7 +82,6 @@ job('RAO-CI-42-Test-Team-VENUS') {
 // ######################################################################
 job('RAO-CI-23-Build-Team-PLUTO') {
 	description('RAO-CI-23-Build-Team-PLUTO')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team pluto')
@@ -94,7 +90,6 @@ job('RAO-CI-23-Build-Team-PLUTO') {
 // ----------------------------------------------------------------------
 job('RAO-CI-33-Deploy-Team-PLUTO') {
 	description('RAO-CI-33-Deploy-Team-PLUTO')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./deploy.sh team pluto')
@@ -103,7 +98,6 @@ job('RAO-CI-33-Deploy-Team-PLUTO') {
 // ----------------------------------------------------------------------
 job('RAO-CI-43-Test-Team-PLUTO') {
 	description('RAO-CI-43-Test-Team-PLUTO')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh team pluto')
@@ -112,7 +106,6 @@ job('RAO-CI-43-Test-Team-PLUTO') {
 // ######################################################################
 job('RAO-CI-50-System-Gate') {
 	description('RAO-CI-50-Build-System-Gate')
-	wrappers { timestamps() }
 	steps {
         shell('echo system gate')
         shell('echo SYSTEM_COMMITS=YES >> /tmp/build.env')
@@ -122,7 +115,6 @@ job('RAO-CI-50-System-Gate') {
 // ----------------------------------------------------------------------
 job('RAO-CI-51-Build-System') {
 	description('RAO-CI-51-Build-System')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh system')
@@ -131,7 +123,6 @@ job('RAO-CI-51-Build-System') {
 // ----------------------------------------------------------------------
 job('RAO-CI-52-Deploy-System') {
 	description('RAO-CI-52-Deploy-System')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./deploy.sh system')
@@ -140,7 +131,6 @@ job('RAO-CI-52-Deploy-System') {
 // ----------------------------------------------------------------------
 job('RAO-CI-53-Test-System') {
 	description('RAO-CI-53-Test-System')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./test.sh system')
@@ -149,7 +139,6 @@ job('RAO-CI-53-Test-System') {
 // ######################################################################
 job('RAO-CI-60-Release-Gate') {
 	description('RAO-CI-60-Release-Gate')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('echo release gate')
@@ -158,7 +147,6 @@ job('RAO-CI-60-Release-Gate') {
 // ----------------------------------------------------------------------
 job('RAO-CI-61-Release-Prepare') {
 	description('RAO-CI-61-Release-Prepare')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./release.sh prepare')
@@ -167,7 +155,6 @@ job('RAO-CI-61-Release-Prepare') {
 // ----------------------------------------------------------------------
 job('RAO-CI-62-Release-Verify') {
 	description('RAO-CI-62-Release-Verify')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./release.sh verify')
@@ -176,7 +163,6 @@ job('RAO-CI-62-Release-Verify') {
 // ----------------------------------------------------------------------
 job('RAO-CI-63-Release-Publish') {
 	description('RAO-CI-63-Release-Publish')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./release.sh publish')
@@ -185,7 +171,6 @@ job('RAO-CI-63-Release-Publish') {
 // ----------------------------------------------------------------------
 job('RAO-CI-64-Release-Notify') {
 	description('RAO-CI-64-Release-Notify')
-	wrappers { timestamps() }
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./release.sh notify')
