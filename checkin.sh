@@ -50,7 +50,7 @@ echo "export $*" >> ${BUILD_ENV_FILE}
 # ------------------------------------------------------------
 f_checkin_code_by_team_members () {
 ECHO "Simulate code check-in by each team "
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	v_commits=$((1 + $RANDOM % ${MAX_COMMITS_PER_TEAM} ))
 	[[ ${v_commits} -lt ${MIN_COMMITS_PER_TEAM} ]] && v_commits=${MIN_COMMITS_PER_TEAM}
@@ -76,7 +76,7 @@ f_flow_list_commits_by_each_team () {
 ECHO ${vLINE}
 ECHO "Compare team branch \"team-${TEAM}\" with build branch \"build-${TEAM}\""
 git checkout master
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	LineHeader "List of commits by team \"${TEAM}\":"
 	ECHO "git log origin/master..build-${TEAM}" 
