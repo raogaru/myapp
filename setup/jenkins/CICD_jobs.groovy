@@ -335,7 +335,7 @@ pipeline {
 // JENKINS VIEWS
 // ######################################################################
 // ######################################################################
-listView("${vViewNameCI}-List") {
+listView("${vViewNameCI}") {
     description("${vViewNameCI}")
     filterBuildQueue()
     filterExecutors()
@@ -354,7 +354,7 @@ listView("${vViewNameCI}-List") {
     }
 }
 // ######################################################################
-listView("${vViewNameCD}-List") {
+listView("${vViewNameCD}") {
     description("${vViewNameCD}")
     filterBuildQueue()
     filterExecutors()
