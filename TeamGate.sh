@@ -9,15 +9,15 @@ f_teamgate_init() {
 rm -f ${BUILD_ENV_FILE}
 touch ${BUILD_ENV_FILE}
 chmod 755 ${BUILD_ENV_FILE}
-BUILD_NUM=$(date '+%Y%m%d%H%M')
-ADDENV "BUILD_NUM=${BUILD_NUM}"
-BUILD_DIR=/tmp/build/${BUILD_NUM}
-ADDENV "BUILD_DIR=${BUILD_DIR}"
-ADDENV "BUILD_TEAMS=\"${BUILD_TEAMS}\""
+export PIPE_NUM=$(date '+%Y%m%d%H%M')
+ADDENV "PIPE_NUM=${PIPE_NUM}"
+PIPE_DIR=/tmp/build/${PIPE_NUM}
+ADDENV "PIPE_DIR=${PIPE_DIR}"
+ADDENV "AGILE_TEAMS=\"${AGILE_TEAMS}\""
 ECHO ${vLINE}
-ECHO "Build Initialized - BUILD_NUM is \"${BUILD_NUM}\""
+ECHO "Build Initialized - PIPE_NUM is \"${PIPE_NUM}\""
 ECHO ${vLINE}
-mkdir -p ${BUILD_DIR}
+mkdir -p ${PIPE_DIR}
 }
 # ------------------------------------------------------------
 f_teamgate_checkout_master() {
@@ -34,18 +34,18 @@ LineHeader "Current branch"
 # ------------------------------------------------------------
 f_teamgate_validate_team_branches() {
 LineHeader "List development teams"
-	rm -f ${BUILD_DIR}/teams.tmp
-	for TEAM in ${BUILD_TEAMS}; do echo "${TEAM}" >> ${BUILD_DIR}/teams.tmp; done
-	cat ${BUILD_DIR}/teams.tmp |sort > ${BUILD_DIR}/teams.lst
-	cat ${BUILD_DIR}/teams.lst
-	rm -f ${BUILD_DIR}/teams.tmp
+	rm -f ${PIPE_DIR}/teams.tmp
+	for TEAM in ${AGILE_TEAMS}; do echo "${TEAM}" >> ${PIPE_DIR}/teams.tmp; done
+	cat ${PIPE_DIR}/teams.tmp |sort > ${PIPE_DIR}/teams.lst
+	cat ${PIPE_DIR}/teams.lst
+	rm -f ${PIPE_DIR}/teams.tmp
 
 LineHeader "Identify list of team-branches"
-	git branch -a | grep remote | grep "\/team\-" | sed -e 's/^.*\/team-//'|sort > ${BUILD_DIR}/git_team_branches.lst
-	cat ${BUILD_DIR}/git_team_branches.lst | sed -e 's/^/team\-/'
+	git branch -a | grep remote | grep "\/team\-" | sed -e 's/^.*\/team-//'|sort > ${PIPE_DIR}/git_team_branches.lst
+	cat ${PIPE_DIR}/git_team_branches.lst | sed -e 's/^/team\-/'
 
 LineHeader "Compare teams with team-branches"
-	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst
+	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst
 	r=$?
 
 if [ $r -eq 0 ]; then
@@ -54,23 +54,23 @@ else
 	WARN "team and team-branches does not match"
 
 	LineHeader "Team branches missing. Branches to be created: "
-	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
+	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
 
 	LineHeader "Team branches found for unknown team. Branches to be deleted:"
-	diff ${BUILD_DIR}/teams.lst ${BUILD_DIR}/git_team_branches.lst |grep ">" |sed -e 's/^\> //' | sed -e 's/^/team\-/'
+	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst |grep ">" |sed -e 's/^\> //' | sed -e 's/^/team\-/'
 fi
 }
 # ------------------------------------------------------------
 f_teamgate_list_commits_by_each_team () {
 ECHO ${vLINE}
 ECHO "Compare team branch \"team-${TEAM}\" with build branch \"build-${TEAM}\""
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	LineHeader "List of commits by team \"${TEAM}\":"
 	ECHO "git log origin/master..build-${TEAM}" 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
-	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > ${BUILD_DIR}/git_commits_by_${TEAM}.lst
-	[[ -s ${BUILD_DIR}/git_commits_by_${TEAM}.lst ]] && ADDENV "TEAM_COMMITS_${TEAM}=YES"
+	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > ${PIPE_DIR}/git_commits_by_${TEAM}.lst
+	[[ -s ${PIPE_DIR}/git_commits_by_${TEAM}.lst ]] && ADDENV "TEAM_COMMITS_${TEAM}=YES"
 done
 }
 # ------------------------------------------------------------
@@ -79,7 +79,7 @@ done
 # ------------------------------------------------------------
 f_teamgate_drop_build_branches () {
 LineHeader "Drop build branches"
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	ECHO "Drop branch \"build-${TEAM}\"" 
 	git branch -D build-${TEAM}
@@ -93,7 +93,7 @@ done
 f_teamgate_recreate_build_branches () {
 LineHeader "Create build branches"
 git checkout master
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	ECHO "Create branch \"build-${TEAM}\"" 
 	git branch build-${TEAM}
@@ -106,7 +106,7 @@ done
 # ------------------------------------------------------------
 f_teamgate_merge_team_branches_to_build_branches () {
 LineHeader "Merge team branches into build branches." 
-for TEAM in ${BUILD_TEAMS}
+for TEAM in ${AGILE_TEAMS}
 do
 	LineHeader "Merge team branch \"team-${TEAM}\" into \"build-${TEAM}\""
 	git checkout build-${TEAM}
@@ -114,7 +114,7 @@ do
 	if [ $r -ne 0 ]; then
 		WARN "git checkout build-${TEAM} failed"
 	fi
-	git merge team-${TEAM} -m "merge-by-Team-Gate-flow-${BUILD_NUM}"
+	git merge team-${TEAM} -m "merge-by-Team-Gate-flow-${PIPE_NUM}"
 	r=$?
 	if [ $r -ne 0 ]; then
 		WARN "git merge build-${TEAM} failed"
