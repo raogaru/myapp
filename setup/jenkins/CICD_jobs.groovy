@@ -14,6 +14,7 @@ job('RAO-CI-10-Pre-Build') {
 	wrappers {
 		colorizeOutput() 
 		timestamps() 
+		preBuildCleanup()
 		buildName('#${BUILD_NUMBER}-${PIPE_NUM}')
 	}
 	logRotator {
