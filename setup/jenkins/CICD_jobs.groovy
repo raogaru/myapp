@@ -14,6 +14,7 @@ job('RAO-CI-10-Pre-Build') {
 	wrappers {
 		colorizeOutput() 
 		timestamps() 
+		buildName('#${BUILD_NUMBER}-${PIPE_NUM}')
 	}
 	logRotator {
 		daysToKeep(1)
@@ -26,6 +27,15 @@ job('RAO-CI-10-Pre-Build') {
 // ######################################################################
 job('RAO-CI-20-Team-Gate') {
 	description('RAO-CI-20-Team-Gate')
+	wrappers {
+		colorizeOutput() 
+		timestamps() 
+		buildName('#${BUILD_NUMBER}-${PIPE_NUM}')
+	}
+	logRotator {
+		daysToKeep(1)
+		numToKeep(24)
+	}
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./TeamGate.sh')
@@ -34,6 +44,15 @@ job('RAO-CI-20-Team-Gate') {
 // ######################################################################
 job('RAO-CI-21-Build-Team-MARS') {
 	description('RAO-CI-21-Build-Team-MARS')
+	wrappers {
+		colorizeOutput() 
+		timestamps() 
+		buildName('#${BUILD_NUMBER}-${PIPE_NUM}')
+	}
+	logRotator {
+		daysToKeep(1)
+		numToKeep(24)
+	}
 	scm {github('raogaru/myapp')}
 	steps {
         shell('./build.sh team mars')
