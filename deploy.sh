@@ -31,62 +31,59 @@ else
 	v_deploy_flag="NO"
 	ECHO "Skipping Deployment"
 	echo "${vLINE}"
-	exit 1
 fi
 
-case "${vTYPE}" in
-"team") 
-	src/db/liquibase.sh ${vTEAM} ;;
-"system") 
-	src/db/liquibase.sh system ;;
-"ENV")
-	case "${vTEAM}" in 
-	"SECURITY") src/db/liquibase.sh st ;;
-	"PERFORMANCE") src/db/liquibase.sh pt ;;
-	"ACCEPTANCE") src/db/liquibase.sh at ;;
-	"INTERFACE") src/db/liquibase.sh it ;;
-	"PRODUCTION") src/db/liquibase.sh prod ;;
-	esac
-	;;
-esac
-
-r=$?
-
-if [ ${r} -eq 0 ]; then
-	ECHO "Liquibase Build successful."
+if [ "${v_deploy_flag}" == "YES" ] ; then
 	case "${vTYPE}" in
 	"team") 
-		ADDENV "TEAM_DEPLOY_${vTEAM}=SUCCESS"
-		;;
+		src/db/liquibase.sh ${vTEAM} ;;
 	"system") 
-		ADDENV "SYSTEM_DEPLOY=SUCCESS"
-		;;
-	"ENV") 
-		ADDENV "CD_ENV_${vTEAM}=SUCCESS"
+		src/db/liquibase.sh system ;;
+	"ENV")
+		case "${vTEAM}" in 
+		"SECURITY") src/db/liquibase.sh st ;;
+		"PERFORMANCE") src/db/liquibase.sh pt ;;
+		"ACCEPTANCE") src/db/liquibase.sh at ;;
+		"INTERFACE") src/db/liquibase.sh it ;;
+		"PRODUCTION") src/db/liquibase.sh prod ;;
+		esac
 		;;
 	esac
-else
-	ECHO "Liquibase Failed."
+	r=$?
+
+	if [ ${r} -eq 0 ]; then
+		ECHO "Liquibase Build successful."
+		case "${vTYPE}" in
+		"team") ADDENV "TEAM_DEPLOY_${vTEAM}=SUCCESS" ;;
+		"system") ADDENV "SYSTEM_DEPLOY=SUCCESS" ;;
+		"ENV") ADDENV "CD_ENV_${vTEAM}=SUCCESS" ;;
+		esac
+		exit 0
+	else
+		ECHO "Liquibase Failed."
+		case "${vTYPE}" in
+		"team") ADDENV "TEAM_DEPLOY_${vTEAM}=FAILED" ;;
+		"system") ADDENV "SYSTEM_DEPLOY=FAILED" ;;
+		"ENV") ADDENV "CD_ENV_${vTEAM}=FAILED" ;;
+		esac
+		exit 1
+	fi
+else   // when v_deploy_flag="NO"
 	case "${vTYPE}" in
-	"team") 
-		ADDENV "TEAM_DEPLOY_${vTEAM}=FAILED"
-		;;
-	"system") 
-		ADDENV "SYSTEM_DEPLOY=FAILED"
-		;;
-	"ENV") 
-		ADDENV "CD_ENV_${vTEAM}=FAILED"
-		;;
+	"team") ADDENV "TEAM_DEPLOY_${vTEAM}=N/A" ;;
+	"system") ADDENV "SYSTEM_DEPLOY=N/A" ;;
+	"ENV") ADDENV "CD_ENV_${vTEAM}=N/A" ;;
 	esac
+
 fi
 
-s=$((1 + $RANDOM % ${RC_SLEEP_SECONDS}))
-echo "Sleeping ... ${s} seconds"
-sleep ${s}
+#s=$((1 + $RANDOM % ${RC_SLEEP_SECONDS}))
+#echo "Sleeping ... ${s} seconds"
+#sleep ${s}
 
-r=$((1 + $RANDOM % 100))
-echo "${vTASK} Completed"
-echo "${vTASK} Result ${r}"
+#r=$((1 + $RANDOM % 100))
+#echo "${vTASK} Completed"
+#echo "${vTASK} Result ${r}"
 
 if [ ${r} -gt ${RC_PASS_SCORE} ]; then
 	echo "${vTASK} SUCCESSS"
