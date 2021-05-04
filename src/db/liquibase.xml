@@ -6,28 +6,28 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">  
 
    <changeSet id="1" author="rao">  
-        <sqlFile path="src/db/sql/001.sql" />  
+        <sqlFile path="src/db/sql/dummy/001.sql" />  
    </changeSet> 
 
    <changeSet id="2" author="rao">  
-        <sqlFile path="src/db/sql/002.sql" />  
+        <sqlFile path="src/db/sql/dummy/002.sql" />  
    </changeSet> 
 
    <changeSet id="3" author="rao">  
-        <sqlFile path="src/db/sql/003.sql" />  
-        <sqlFile path="src/db/sql/004.sql" />  
+        <sqlFile path="src/db/sql/dummy/003.sql" />  
+        <sqlFile path="src/db/sql/dummy/004.sql" />  
    </changeSet> 
 
    <changeSet id="4" author="rao">  
-        <sqlFile path="src/db/sql/005.sql" />  
+        <sqlFile path="src/db/sql/dummy/005.sql" />  
    </changeSet> 
 
    <changeSet id="5" author="rao">  
-        <sqlFile path="src/db/sql/006.sql" />  
+        <sqlFile path="src/db/sql/dummy/006.sql" />  
    </changeSet> 
 
    <changeSet id="6" author="rao">  
-        <sqlFile path="src/db/sql/007.sql" />  
+        <sqlFile path="src/db/sql/dummy/007.sql" />  
    </changeSet> 
 
 
