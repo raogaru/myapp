@@ -24,27 +24,27 @@ f_teamgate_checkout_master() {
 ECHO "Checkout master branch"
 	git checkout master
 
-LineHeader "List all branches"
+HEADER "List all branches"
 	git branch -a
 
-LineHeader "Current branch"
+HEADER "Current branch"
 	x1=$(git branch | grep "^\*" | sed -e 's/^\* //')
 	[[ "${x1}" != "master" ]] && ERROR "Current branch is not \"master\"."
 }
 # ------------------------------------------------------------
 f_teamgate_validate_team_branches() {
-LineHeader "List development teams"
+HEADER "List development teams"
 	rm -f ${PIPE_DIR}/teams.tmp
 	for TEAM in ${AGILE_TEAMS}; do echo "${TEAM}" >> ${PIPE_DIR}/teams.tmp; done
 	cat ${PIPE_DIR}/teams.tmp |sort > ${PIPE_DIR}/teams.lst
 	cat ${PIPE_DIR}/teams.lst
 	rm -f ${PIPE_DIR}/teams.tmp
 
-LineHeader "Identify list of team-branches"
+HEADER "Identify list of team-branches"
 	git branch -a | grep remote | grep "\/team\-" | sed -e 's/^.*\/team-//'|sort > ${PIPE_DIR}/git_team_branches.lst
 	cat ${PIPE_DIR}/git_team_branches.lst | sed -e 's/^/team\-/'
 
-LineHeader "Compare teams with team-branches"
+HEADER "Compare teams with team-branches"
 	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst
 	r=$?
 
@@ -53,10 +53,10 @@ if [ $r -eq 0 ]; then
 else
 	WARN "team and team-branches does not match"
 
-	LineHeader "Team branches missing. Branches to be created: "
+	HEADER "Team branches missing. Branches to be created: "
 	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst |grep "<" |sed -e 's/^\< //'| sed -e 's/^/team\-/'
 
-	LineHeader "Team branches found for unknown team. Branches to be deleted:"
+	HEADER "Team branches found for unknown team. Branches to be deleted:"
 	diff ${PIPE_DIR}/teams.lst ${PIPE_DIR}/git_team_branches.lst |grep ">" |sed -e 's/^\> //' | sed -e 's/^/team\-/'
 fi
 }
@@ -66,7 +66,8 @@ ECHO ${vLINE}
 ECHO "Compare team branch \"team-${TEAM}\" with build branch \"build-${TEAM}\""
 for TEAM in ${AGILE_TEAMS}
 do
-	LineHeader "List of commits by team \"${TEAM}\":"
+	echo ''
+	HEADER "List of commits by team \"${TEAM}\":"
 	ECHO "git log origin/master..build-${TEAM}" 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S' 
 	git log origin/master..origin/team-${TEAM} --pretty=format:"%ad:%h:%H:%an:%ae:%s" --date format:'%Y-%m-%d-%H-%M-%S'  > ${PIPE_DIR}/git_commits_by_${TEAM}.lst
@@ -78,7 +79,7 @@ done
 #Why?: Agile teams can continue to check-in code into team branches while pipeline uses a snapshot of team branch in the name of build branch"
 # ------------------------------------------------------------
 f_teamgate_drop_build_branches () {
-LineHeader "Drop build branches"
+HEADER "Drop build branches"
 for TEAM in ${AGILE_TEAMS}
 do
 	ECHO "Drop branch \"build-${TEAM}\"" 
@@ -91,7 +92,7 @@ done
 }
 # ------------------------------------------------------------
 f_teamgate_recreate_build_branches () {
-LineHeader "Create build branches"
+HEADER "Create build branches"
 git checkout master
 for TEAM in ${AGILE_TEAMS}
 do
@@ -105,16 +106,16 @@ done
 }
 # ------------------------------------------------------------
 f_teamgate_merge_team_branches_to_build_branches () {
-LineHeader "Merge team branches into build branches." 
+HEADER "Merge team branches into build branches." 
 for TEAM in ${AGILE_TEAMS}
 do
-	LineHeader "Merge team branch \"team-${TEAM}\" into \"build-${TEAM}\""
+	HEADER "Merge team branch \"team-${TEAM}\" into \"build-${TEAM}\""
 	git checkout build-${TEAM}
 	r=$?
 	if [ $r -ne 0 ]; then
 		WARN "git checkout build-${TEAM} failed"
 	fi
-	git merge team-${TEAM} -m "merge-by-Team-Gate-flow-${PIPE_NUM}"
+	git merge origin/team-${TEAM} -m "merge-by-Team-Gate-flow-${PIPE_NUM}"
 	r=$?
 	if [ $r -ne 0 ]; then
 		WARN "git merge build-${TEAM} failed"
@@ -134,9 +135,9 @@ f_teamgate_recreate_build_branches
 f_teamgate_merge_team_branches_to_build_branches
 
 git checkout master
-LineHeader "Checkout master" 
+HEADER "Checkout master" 
 
-LineHeader "Completed."
+HEADER "Completed."
 #
 # ######################################################################
 #

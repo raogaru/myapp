@@ -21,7 +21,9 @@ job('DEMO-CI-10-Pre-Build') {
 		daysToKeep(1)
 		numToKeep(24)
 	}
-	scm { github('raogaru/myapp') }
+	scm {
+		github('raogaru/myapp') 
+	}
 	steps {
         shell('echo hello')
 	}
