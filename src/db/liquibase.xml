@@ -5,6 +5,10 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">  
 
+   <changeSet id="order_mgmt_schema" author="rao">  
+        <sqlFile path="src/db/sql/order_mgmt_schema.sql" />  
+   </changeSet> 
+
    <changeSet id="1" author="rao">  
         <sqlFile path="src/db/sql/dummy/001.sql" />  
    </changeSet> 
