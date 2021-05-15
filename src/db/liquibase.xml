@@ -38,5 +38,9 @@
         <sqlFile path="src/db/sql/dummy/007.sql" />  
    </changeSet> 
 
+   <changeSet id="8" author="rao">  
+        <sqlFile path="src/db/sql/dummy/008.sql" />  
+   </changeSet> 
+
 
 </databaseChangeLog>
