@@ -8,8 +8,8 @@ vACTION=${1}
 source myapp.env
 
 MAX_FILE_COUNT=100		# max number of files edited by simulation
-MIN_COMMITS_PER_TEAM=2		# min number of commits per team by simulation
-MAX_COMMITS_PER_TEAM=5		# max number of commits per team by simulation
+MIN_COMMITS_PER_TEAM=1		# min number of commits per team by simulation
+MAX_COMMITS_PER_TEAM=3		# max number of commits per team by simulation
 MAX_TEAM_MEMBERS=10		# max number of team members per agile team
 
 BUILD_ENV_FILE=/tmp/build.env
