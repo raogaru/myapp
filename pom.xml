@@ -2,40 +2,16 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.raogaru.app</groupId>
-  <artifactId>my-maven-app</artifactId>
+  <artifactId>myapp</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>my-maven-app</name>
+  <name>myapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
       <!-- This property will be set by the Maven Dependency plugin -->
-      <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>checker</artifactId>
-        <version>1.9.4</version>
-    </dependency>
-    <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>checker-qual</artifactId>
-        <version>1.9.4</version>
-    </dependency>
-    <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>jdk8</artifactId>
-        <version>1.9.4</version>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -95,10 +71,6 @@
               <source>1.8</source>
               <target>1.8</target>
               <fork>true</fork>
-              <!-- Add all the checkers you want to enable here -->
-              <annotationProcessors>
-                  <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
-              </annotationProcessors>
               <compilerArgs>
                   <!-- location of the annotated JDK, which comes from a Maven dependency -->
                   <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
